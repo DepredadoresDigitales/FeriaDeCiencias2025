@@ -40,11 +40,6 @@
       transition: background-color 0.3s ease;
     }
 
-    .row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
   /* HEADER -------------------------------------------------------------------------------------------------------- */
 
   header {
