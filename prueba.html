@@ -1,270 +1,330 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Feria de Ciencias</title>
-  <link rel="stylesheet" href="style1.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-</head>
-
-<body>
-
-<!-- HEADER -->
-  <header>
-    <a class="navbar-brand" href="#">
-      <br>
-      <img src="DD1.ico" alt="logo" width="40px">
-    </a>
-    <nav class="navbar navbar-expand-md navbar-dark">
-      <div class="container-fluid">
-        
-        <!-- DROPDOWN MÓVIL -->
-          <button class="navbar-toggler d-md-none dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <img src="DD1.ico" alt="logo" width="30%">
-          </button> 
-
-        <!-- NAVBAR -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-          <ul class="navbar-nav mb-2 mb-md-0">
-            <li class="nav-item"><a class="nav-link active" href="index.html">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="casos.html">Casos</a></li>
-            
-            <!-- DROPDOWN -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="infoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="gap: 0.3rem;">
-                Información
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="infoDropdown">
-                <li><a class="dropdown-item" href="informacion.html">¿Qué es?</a></li>
-                <li><a class="dropdown-item" href="ayuda.html">Ayuda</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item"><a class="nav-link" href="links.html">Links</a></li>
-            <li class="nav-item"><a class="nav-link" href="creditos.html">Créditos</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-</header>
-
-<!-- INICIO -->
-<section class="hero" style="position: relative; overflow: hidden;">
-  <!-- Canvas al fondo -->
-  <canvas id="scratchCanvas" style="
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Detector de Riesgos Online | SUPER PIOLA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
     height: 100%;
+    overflow: hidden;
+    background: #0b0c1a;
+    color: #0ff;
+    font-family: 'Orbitron', monospace;
+    user-select: none;
+  }
+  #fondo {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: 0;
-    touch-action: none;
-  "></canvas>
+    background: #0b0c1a;
+  }
+  #app {
+    position: relative;
+    z-index: 10;
+    max-width: 420px;
+    margin: 40px auto;
+    background: rgba(0,255,255,0.05);
+    border: 2px solid #0ff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 0 25px #0ff88;
+    text-align: center;
+  }
+  h1 {
+    margin: 0 0 15px;
+    font-weight: 900;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #0ff;
+  }
+  #mensaje {
+    min-height: 140px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    border-radius: 15px;
+    border: 2px solid #0ff;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(0,255,255,0.1);
+    box-shadow: 0 0 15px #0ff;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+  }
+  #mensaje.peligro {
+    background: rgba(255,0,50,0.15);
+    border-color: #ff0055;
+    box-shadow: 0 0 25px #ff0055;
+  }
+  #mensaje.seguro {
+    background: rgba(0,255,50,0.15);
+    border-color: #00ff55;
+    box-shadow: 0 0 25px #00ff55;
+  }
+  #botones {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+  }
+  button {
+    flex: 1;
+    background: #0ff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #022;
+    cursor: pointer;
+    box-shadow: 0 0 15px #0ff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  button:hover {
+    box-shadow: 0 0 30px #0ff;
+    transform: scale(1.1);
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+  #resultado {
+    margin-top: 22px;
+    font-size: 1rem;
+    min-height: 80px;
+    color: #0ff;
+    user-select: text;
+    text-shadow: 0 0 8px #0ffaa;
+  }
+  #contador {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #44ffee;
+  }
+  /* Confeti */
+  #confeti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 15;
+  }
+</style>
+</head>
+<body>
+<canvas id="fondo"></canvas>
+<canvas id="confeti-canvas"></canvas>
 
-  <!-- Texto encima del canvas -->
-  <div class="hero-text" style="
-        position: relative;
-        z-index: 1;
-        user-select: none;
-        pointer-events: none;
-        ">
-    <h2>Depredadores Digitales</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+<div id="app" role="main" aria-live="polite" aria-atomic="true">
+  <h1>Detector de Riesgos Online</h1>
+  <div id="mensaje">Preparado para detectar señales sospechosas?</div>
+  <div id="botones">
+    <button id="btnSeguro" aria-label="Marcar como Seguro">Seguro ✅</button>
+    <button id="btnPeligro" aria-label="Marcar como Peligro">Peligro ⚠️</button>
   </div>
-</section>
-
-
-
-<!-- CAROUSEL -->
-
- <div id="carousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-
-    <div class="carousel-indicators mb-2">
-      <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      <button type="button" data-bs-target="#carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-    </div>
-
-    <div class="carousel-item active">
-      <div class="row g-0">
-        <div class="col-md-4 carousel-info">
-          <div>
-            <h3>Título 1</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo possimus saepe unde magni iusto repellendus ipsa doloremque nisi rem rerum modi amet quis ab sint dolorum voluptate, ut provident maiores.</p>
-          </div>
-        </div>
-        <div class="col-md-8 carousel-img">
-          <img src="https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/8B93/production/_106413753_cab0cc57-8303-4e1d-8532-12fff550a71c.png.webp" class="d-block w-100" alt="Imagen 1">
-        </div>
-      </div>
-    </div>
-
-    <div class="carousel-item">
-      <div class="row g-0">
-        <div class="col-md-4 carousel-info">
-          <div>
-            <h3>Título 2</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, quis qui ab eligendi veritatis voluptatum blanditiis, labore mollitia culpa, doloribus dolorem sit repellat sed! Sequi libero laboriosam voluptatum mollitia! Expedita.</p>
-          </div>
-        </div>
-        <div class="col-md-8 carousel-img">
-          <img src="https://www.revistaanfibia.cl/wp-content/uploads/2023/01/Pedofilia_01Port-1200x675.jpg" class="d-block w-100" alt="Imagen 2">
-        </div>
-      </div>
-    </div>
-
-    <div class="carousel-item">
-      <div class="row g-0">
-        <div class="col-md-4 carousel-info">
-          <div>
-            <h3>Título 3</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis at similique pariatur fuga quas aperiam voluptates praesentium, repudiandae illo iste sunt totam, accusantium deleniti magnam optio illum nesciunt aut quaerat?</p>
-          </div>
-        </div>
-        <div class="col-md-8 carousel-img">
-          <img src="https://www.fm893.com.ar/wp-content/uploads/2024/08/pedofilos-o-pederastas-perfiles-29-08-2024@2x.jpg" class="d-block w-100" alt="Imagen 3">
-        </div>
-      </div>
-    </div>
-
-    <div class="carousel-item">
-      <div class="row g-0">
-        <div class="col-md-4 carousel-info">
-          <div>
-            <h3>Título 4</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis eaque rerum ipsa mollitia laboriosam? Maiores quo error eius itaque enim sequi aliquam totam in, dolorum, ipsa ratione aspernatur nemo ea.</p>
-          </div>
-        </div>
-        <div class="col-md-8 carousel-img">
-          <img src="https://imaginabienestar.com/wp-content/uploads/2023/04/grooming.png" class="d-block w-100" alt="Imagen 4">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="carousel-controls-below">
-      <button class="btn btn-outline-light btn-sm" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-        ◀ Anterior
-      </button>
-      <button class="btn btn-outline-light btn-sm" type="button" data-bs-target="#carousel" data-bs-slide="next">
-        Siguiente ▶
-      </button>
-  </div>
+  <div id="resultado" aria-live="assertive" aria-atomic="true"></div>
+  <div id="contador"></div>
 </div>
 
-<!-- CARTAS -->
-  <section>
-    <h2>Imágenes con IA de menores</h2>
-    <div class="cartas">
-      <div class="carta">
-        <h5>Protección de la privacidad</h5>
-        <p>Los menores tienen derecho a la privacidad y a la protección de su imágen.</p>
-      </div>
-      <div class="carta">
-        <h5>Prevención de explotación</h5>
-        <p>La generación de imágenes de menores puede ser utilizada para fines de explotación o abuso.</p>
-      </div>
-      <div class="carta">
-        <h5>Impacto psicológico</h5>
-        <p>La creación y distribución de imágenes de menores puede tener un impacto psicológico muy negativo.</p>
-      </div>
-    </div>
-    <div class="cartas">
-      <div class="carta">
-        <h5>Regulaciónes legales</h5>
-        <p>Muchas juridicciones tienen leyes específicas que protegen a los menores de la explotación y el abuso en medios digitales.</p>
-      </div>
-      <div class="carta">
-        <h5>Ética y responsabilidad</h5>
-        <p>La IA debe ser utilizada de manera responsable y ética, asegurando que no se cause daños a individuos o grupos.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERÍA -->
-  <section>
-    <h2>Galería</h2>
-    <div class="galeria">
-      <img src="https://m.media-amazon.com/images/I/7101Q-6RfFL._UF1000,1000_QL80_.jpg" alt="Imagen 1" />
-      <img src="https://m.media-amazon.com/images/I/7101Q-6RfFL._UF1000,1000_QL80_.jpg" alt="Imagen 2" />
-      <img src="https://m.media-amazon.com/images/I/7101Q-6RfFL._UF1000,1000_QL80_.jpg" alt="Imagen 3" />
-    </div>
-  </section>
-  <!-- FORMULARIO -->
-  <section>
-    <h2>Contacto</h2>
-    <form>
-      <input type="text" placeholder="Nombre" required />
-      <input type="email" placeholder="Correo" required />
-      <textarea placeholder="Mensaje..." required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
-  </section>
-
-  <footer>
-    <p>© 2025 Feria de Ciencias.</p>
-  </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-
 <script>
-  const canvas = document.getElementById("scratchCanvas");
-  const ctx = canvas.getContext("2d");
-  const img = new Image();
-  img.src = "si.png"; // Reemplazá esto con la ruta de tu imagen
+  // Fondo animado con líneas neón
+  const canvasFondo = document.getElementById("fondo");
+  const ctxFondo = canvasFondo.getContext("2d");
+  let w, h;
+  function resizeFondo() {
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvasFondo.width = w;
+    canvasFondo.height = h;
+  }
+  resizeFondo();
+  window.addEventListener("resize", resizeFondo);
 
-  function resizeCanvasAndDrawImage() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+  const lineas = [];
+  const NUM_LINEAS = 30;
+  for(let i=0; i<NUM_LINEAS; i++) {
+    lineas.push({
+      x: Math.random()*w,
+      y: Math.random()*h,
+      dx: (Math.random()-0.5)*0.8,
+      dy: (Math.random()-0.5)*0.8,
+      length: 100 + Math.random()*100,
+      angle: Math.random()*Math.PI*2,
+      speed: 0.01 + Math.random()*0.02
+    });
+  }
 
-    // Dibujar la imagen sobre el canvas cuando se cargue
-    img.onload = () => {
-      ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  function dibujarFondo() {
+    ctxFondo.clearRect(0,0,w,h);
+    ctxFondo.strokeStyle = "#0ff";
+    ctxFondo.lineWidth = 1.3;
+    ctxFondo.shadowColor = "#0ff";
+    ctxFondo.shadowBlur = 6;
 
-      // Habilitar el modo de borrado
-      ctx.globalCompositeOperation = "destination-out";
-    };
+    for(let l of lineas) {
+      l.angle += l.speed;
+      const x2 = l.x + Math.cos(l.angle)*l.length;
+      const y2 = l.y + Math.sin(l.angle)*l.length;
+      ctxFondo.beginPath();
+      ctxFondo.moveTo(l.x, l.y);
+      ctxFondo.lineTo(x2, y2);
+      ctxFondo.stroke();
 
-    // Si la imagen ya estaba cargada, igual la dibujamos
-    if (img.complete) {
-      ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      ctx.globalCompositeOperation = "destination-out";
+      l.x += l.dx;
+      l.y += l.dy;
+      if(l.x<0 || l.x>w) l.dx*=-1;
+      if(l.y<0 || l.y>h) l.dy*=-1;
     }
   }
 
-  function scratch(e) {
-    const rect = canvas.getBoundingClientRect();
-    let x, y;
+  // Confeti para celebrar puntaje alto
+  const confetiCanvas = document.getElementById("confeti-canvas");
+  const confettiCtx = confetiCanvas.getContext("2d");
+  confetiCanvas.width = w;
+  confetiCanvas.height = h;
 
-    if (e.touches) {
-      x = e.touches[0].clientX - rect.left;
-      y = e.touches[0].clientY - rect.top;
+  const confettis = [];
+  const COLORS = ['#0ff','#0f0','#f0f','#ff0','#f00','#0f9'];
+
+  function crearConfetti() {
+    for(let i=0; i<150; i++) {
+      confettis.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*6 + 4,
+        dx: (Math.random()-0.5)*3,
+        dy: Math.random()*3 + 2,
+        color: COLORS[Math.floor(Math.random()*COLORS.length)],
+        rot: Math.random()*360,
+        dRot: (Math.random()-0.5)*10,
+        alpha: 1
+      });
+    }
+  }
+
+  function animarConfetti() {
+    confettiCtx.clearRect(0, 0, w, h);
+    for(let i = confettis.length -1; i >=0; i--) {
+      let c = confettis[i];
+      c.x += c.dx;
+      c.y += c.dy;
+      c.rot += c.dRot;
+      c.alpha -= 0.01;
+      if(c.alpha <= 0 || c.y > h) confettis.splice(i,1);
+      else {
+        confettiCtx.save();
+        confettiCtx.globalAlpha = c.alpha;
+        confettiCtx.translate(c.x, c.y);
+        confettiCtx.rotate(c.rot * Math.PI/180);
+        confettiCtx.fillStyle = c.color;
+        confettiCtx.fillRect(-c.r/2, -c.r/2, c.r, c.r);
+        confettiCtx.restore();
+      }
+    }
+  }
+
+  // Juego y lógica
+  const mensajes = [
+    { texto: "Un usuario desconocido te pide fotos personales.", esPeligro: true, explicacion: "Nunca compartas fotos con desconocidos. Puede ser peligroso." },
+    { texto: "Te ofrecen un premio si compartís tu dirección y teléfono.", esPeligro: true, explicacion: "Ofrecer premios para obtener datos personales es una técnica de engaño." },
+    { texto: "Alguien te pregunta tu edad y escuela.", esPeligro: true, explicacion: "No des información personal a extraños en internet." },
+    { texto: "Un amigo te envía un meme divertido.", esPeligro: false, explicacion: "Compartir memes con amigos es normal y seguro." },
+    { texto: "Un contacto conocido te invita a un grupo cerrado de tu interés.", esPeligro: false, explicacion: "Participar en grupos con gente que conocés suele ser seguro." },
+    { texto: "Te envían un link sospechoso para 'ver fotos' exclusivas.", esPeligro: true, explicacion: "No hagas clic en enlaces sospechosos, pueden robar tus datos." },
+    { texto: "Alguien te pregunta si quieres hacer un 'juego secreto'.", esPeligro: true, explicacion: "Los juegos secretos pueden ser trampas para manipularte." },
+    { texto: "Recibís un mensaje de tu profesor con tareas y avisos.", esPeligro: false, explicacion: "Comunicación escolar oficial es generalmente segura." },
+  ];
+
+  let indice = 0;
+  let puntaje = 0;
+  const mensajeDiv = document.getElementById("mensaje");
+  const resultadoDiv = document.getElementById("resultado");
+  const contadorDiv = document.getElementById("contador");
+  const btnSeguro = document.getElementById("btnSeguro");
+  const btnPeligro = document.getElementById("btnPeligro");
+
+  function mostrarMensaje() {
+    const m = mensajes[indice];
+    mensajeDiv.textContent = m.texto;
+    mensajeDiv.className = "";
+    resultadoDiv.textContent = "";
+    contadorDiv.textContent = `Mensaje ${indice + 1} de ${mensajes.length}`;
+  }
+
+  function procesarRespuesta(esPeligroUsuario) {
+    const m = mensajes[indice];
+    if (esPeligroUsuario === m.esPeligro) {
+      resultadoDiv.style.color = "#0f0";
+      resultadoDiv.textContent = "¡Correcto! " + m.explicacion + " 🎉";
+      puntaje++;
+      mensajeDiv.className = m.esPeligro ? "peligro" : "seguro";
+      pulso(m.esPeligro ? '#ff0055' : '#00ff55');
     } else {
-      x = e.clientX - rect.left;
-      y = e.clientY - rect.top;
+      resultadoDiv.style.color = "#f00";
+      resultadoDiv.textContent = "Cuidado! " + m.explicacion + " ⚠️";
+      mensajeDiv.className = "peligro";
+      pulso('#ff0033');
     }
-
-    ctx.beginPath();
-    ctx.arc(x, y, 40, 0, Math.PI * 2);
-    ctx.fill();
+    indice++;
+    if (indice >= mensajes.length) {
+      terminarJuego();
+    } else {
+      setTimeout(() => {
+        mostrarMensaje();
+        resultadoDiv.textContent = "";
+        mensajeDiv.className = "";
+      }, 2800);
+    }
   }
 
-  canvas.addEventListener("mousemove", scratch);
-  canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-    scratch(e);
+  function terminarJuego() {
+    mensajeDiv.textContent = "Juego terminado!";
+    mensajeDiv.className = "";
+    resultadoDiv.innerHTML = `<strong>Tu puntaje: ${puntaje} / ${mensajes.length}</strong><br>
+      ${puntaje >= mensajes.length * 0.7 
+        ? "¡Genial! Sabés cómo detectar riesgos online. 👏"
+        : "Te recomendamos aprender más sobre seguridad en internet. 💡"}`;
+
+    btnSeguro.disabled = true;
+    btnPeligro.disabled = true;
+    contadorDiv.textContent = "";
+
+    if (puntaje >= mensajes.length * 0.7) {
+      crearConfetti();
+    }
+  }
+
+  function pulso(color) {
+    mensajeDiv.style.boxShadow = `0 0 30px 8px ${color}`;
+    setTimeout(() => {
+      mensajeDiv.style.boxShadow = "";
+    }, 600);
+  }
+
+  btnSeguro.onclick = () => procesarRespuesta(false);
+  btnPeligro.onclick = () => procesarRespuesta(true);
+
+  mostrarMensaje();
+
+  // Animación fondo y confeti
+  function loop() {
+    dibujarFondo();
+    animarConfetti();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // Ajustar canvas confeti si cambia tamaño
+  window.addEventListener('resize', () => {
+    resizeFondo();
+    confetiCanvas.width = w;
+    confetiCanvas.height = h;
   });
-
-  window.addEventListener("resize", resizeCanvasAndDrawImage);
-  window.addEventListener("load", resizeCanvasAndDrawImage);
 </script>
-
 
 </body>
 </html>

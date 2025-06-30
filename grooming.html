@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Información Grooming | Feria de Ciencias</title>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link rel="stylesheet" href="style1.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 </head>
@@ -57,14 +58,14 @@
   </div>
 </section>
 
-<section class="section-bg">
+<section class="section-bg" data-aos="fade-up">
   <h2 class="section-title">¿Qué es el grooming?</h2>
   <p>El <strong>grooming</strong> es una conducta donde un adulto se gana la confianza de un menor con el objetivo de abusar sexualmente o explotarlo mediante medios digitales. Es un delito grave y peligroso que puede pasar desapercibido.</p>
 </section>
 
-<section class="section-bg">
+<section class="section-bg" data-aos="fade-up">
   <h2 class="section-title">Etapas comunes del grooming</h2>
-  <div class="info-cards">
+  <div class="info-cards" data-aos="fade-up" data-aos-duration="2500">
     <div class="info-card">
       <h5>1. Contacto inicial</h5>
       <p>El adulto contacta al menor a través de redes sociales, juegos en línea o chats, buscando crear un vínculo.</p>
@@ -84,7 +85,7 @@
   </div>
 </section>
 
-<section class="section-bg">
+<section class="section-bg" data-aos="fade-up">
   <h2 class="section-title">Señales de alerta</h2>
   <ul>
     <li>El menor pasa mucho tiempo chateando con alguien desconocido.</li>
@@ -102,9 +103,9 @@
     <a href="https://www.argentina.gob.ar/linea102" target="_blank" class="btn btn-light">Sitio oficial</a>
   </section>
 
-<section class="section-bg">
+<section class="section-bg" data-aos="fade-up">
   <h2 class="section-title">¿Cómo actuar si sospechás grooming?</h2>
-  <div class="info-cards">
+  <div class="info-cards" data-aos="fade-up" data-aos-duration="2500">
     <div class="info-card">
       <h5>Hablar con el menor</h5>
       <p>Escuchar sin juzgar, generar confianza para que pueda contar lo que pasa.</p>
@@ -128,6 +129,29 @@
   <p>© 2025 Feria de Ciencias.</p>
 </footer>
 
+
+  <!-- AOS (animaciones al hacer scroll) -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    });
+  </script>
+  
+  <!-- Botón de volver arriba -->
+  <button id="scrollToTopBtn" style="position:fixed;bottom:30px;right:30px;display:none;background:#d33333;color:white;border:none;padding:10px 14px;border-radius:50%;font-size:20px;cursor:pointer;z-index:999;">↑</button>
+  <script>
+    const scrollBtn = document.getElementById("scrollToTopBtn");
+    window.onscroll = () => {
+      scrollBtn.style.display = (window.scrollY > 400) ? "block" : "none";
+    };
+    scrollBtn.onclick = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

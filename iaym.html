@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IA y menores - Depredadores Digitales</title>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link rel="stylesheet" href="style1.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   <style>
@@ -70,41 +71,41 @@
   <h2 class="text-center mb-4">IA: Un riesgo creciente para la niñez</h2>
 
   <div class="row mb-5">
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up">
       <h4>Creación de imágenes falsas de menores</h4>
       <p>Adultos con malas intenciones pueden usar inteligencia artificial para generar imágenes hiperrealistas de menores que nunca posaron para esas fotos. Aunque sean “falsas”, esas imágenes son peligrosas y pueden ser compartidas como si fueran reales.</p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up" data-aos-duration="2000">
       <img src="https://www.extrasoft.es/wp-content/uploads/2023/12/manipulacion-cara-deepfake.png" alt="Imágenes generadas por IA" class="img-fluid">
     </div>
   </div>
 
   <div class="row mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up">
       <h4>Difusión en redes y foros ocultos</h4>
       <p>Estas imágenes suelen circular en plataformas privadas o foros ilegales, dificultando su detección. Esto facilita que crezca el mercado de contenido digital abusivo sin dejar rastros claros.</p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up" data-aos-duration="2000">
       <img src="https://i.blogs.es/e7d6fa/darknet/450_1000.png" alt="Redes ocultas" class="img-fluid">
     </div>
   </div>
 
   <div class="row mb-5">
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up">
       <h4>Robo de fotos reales para crear deepfakes</h4>
       <p>Muchas veces usan fotos reales que los menores publicaron en redes sociales (como selfies o fotos familiares) para editarlas con IA y convertirlas en contenido sexualizado. Esto es un delito y una forma grave de vulneración de derechos.</p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up" data-aos-duration="2000">
       <img src="https://static.eldiario.es/clip/46f0f284-228b-47c2-bdf5-8dfadf3c1f08_16-9-discover-aspect-ratio_default_0.jpg" alt="Deepfake de menores" class="img-fluid">
     </div>
   </div>
 
   <div class="row mb-5 flex-md-row-reverse">
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up">
       <h4>Legalmente complejo, pero éticamente claro</h4>
       <p>Aunque en algunos países las imágenes generadas con IA aún no están reguladas, <strong>crear contenido sexualizado de menores, real o no, es siempre un delito y una violación de sus derechos</strong>.</p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" data-aos="fade-up" data-aos-duration="2000">
       <img src="https://storage.googleapis.com/www-factornueve-com/2022/11/5d9c64bf-pornografia-infantil.jpg" alt="Justicia digital" class="img-fluid">
     </div>
   </div>
@@ -118,7 +119,7 @@
   </section>
 
 <section>
-  <div class="text-center mt-5">
+  <div class="text-center mt-5" data-aos="fade-up">
     <h2>No son “sólo imágenes”, son formas de violencia</h2>
     <p>Difundir o producir imágenes con IA que muestran menores en contextos sexuales o degradantes es una forma de abuso. Tenemos que denunciar, educar y protegernos entre todxs.</p>
   </div>
@@ -129,6 +130,29 @@
     <p>© 2025 Feria de Ciencias.</p>
   </footer>
 
+
+    <!-- AOS (animaciones al hacer scroll) -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  });
+</script>
+
+<!-- Botón de volver arriba -->
+<button id="scrollToTopBtn" style="position:fixed;bottom:30px;right:30px;display:none;background:#d33333;color:white;border:none;padding:10px 14px;border-radius:50%;font-size:20px;cursor:pointer;z-index:999;">↑</button>
+<script>
+  const scrollBtn = document.getElementById("scrollToTopBtn");
+  window.onscroll = () => {
+    scrollBtn.style.display = (window.scrollY > 400) ? "block" : "none";
+  };
+  scrollBtn.onclick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 </html>

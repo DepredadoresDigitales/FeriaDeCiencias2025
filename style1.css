@@ -203,6 +203,12 @@
     width: 100%;
     max-width: 400px;
     box-shadow: 0 0 8px #700;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .carta:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   /* GALERIA ------------------------------------------------------------------------------------------------------- */
@@ -303,10 +309,13 @@
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
   }
   
   form button:hover {
     background-color: #c01e1e;
+    transform: scale(1.1);
+    background-color: #e60e0e;
   }
 
   /* FOOTER ---------------------------------------------------------------------------------------------------------- */
